@@ -1,5 +1,7 @@
 #define BLYNK_PRINT Serial  // Defining serial for BLYNK APP
-
+#define BLYNK_TEMPLATE_ID "TMPL61Yb9x_Fq" //Template ID from Blynk Website
+#define BLYNK_TEMPLATE_NAME "MDRRMO Binalonan" //Template Name from Blynk Website
+ 
 #include <ESP8266WiFi.h>         // Library for wifi module
 #include <BlynkSimpleEsp8266.h>  // Library of Blynk App
 #include <HCSR04.h>              // Library of Ultrasonic Sensor
@@ -40,7 +42,7 @@ void waterLevelcm() {
   Serial.println(cm);
   double level = distancecm - cm;
   if (level > 0) {
-    long centimeter = ((level / distancecm)) * 50;  //  change this whatever the  the value set in distancecm on Line 22
+    long centimeter = ((level / distancecm)) * 50;  //  change this whatever the  the value set in distancecm on Line 24
     Blynk.virtualWrite(V0, centimeter);
   } else {
     Blynk.virtualWrite(V0, 0);  //V0 is for centimeter //Virtual Pin set in BLYNK app
@@ -95,9 +97,9 @@ void setup() {
 
   //Setting the Connection to BLYNK app
   Blynk.begin(auth, ssid, pass);
-  timer.setInterval(10L, waterLevelcm);
-  timer.setInterval(10L, waterLevelpercent);
-  timer.setInterval(1000L, sendSensor);
+  timer.setInterval(10L, waterLevelcm); // every 10 millisecond interval
+  timer.setInterval(10L, waterLevelpercent); // every 10 millisecond interval
+  timer.setInterval(1000L, sendSensor); // every 1 second interval
   dht.begin();  // temp and humidity sensor
 }
 
